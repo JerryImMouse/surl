@@ -17,47 +17,48 @@ pub struct CliArgs {
     /// Url to request to
     pub url: Url,
 
-    /// Define a custom header <header/@file_of_headers>
-    #[arg(short = 'H')]
+    /// Define a custom header 
+    #[arg(short = 'H', long)]
     pub header: Vec<String>,
 
     /// Follow redirects
-    #[arg(short = 'L')]
+    #[arg(short = 'L', long)]
     pub location: bool,
 
     /// Show response headers
-    #[arg(short = 'i')]
+    #[arg(short = 'i', long)]
     pub show_headers: bool,
 
     /// Send a custom User-Agent to host
-    #[arg(short = 'A', default_value = "surl/0.1.0")]
+    #[arg(short = 'A', long, default_value = "surl/0.1.0")]
     pub user_agent: String,
 
     /// user:password basic auth
-    #[arg(short = 'u')]
+    #[arg(short = 'u', long)]
     pub user: Option<String>,
 
-    #[arg(short = 'X')]
+    /// Override default request method
+    #[arg(short = 'X', long = "method")]
     pub request: Option<Method>,
 
     /// Redirect output from stdout to a file
-    #[arg(short = 'o')]
+    #[arg(short = 'o', long)]
     pub output: Option<PathBuf>,
 
-    /// TODO
-    #[arg(short = 'I')]
+    /// sURL will send HEAD request and output only the headers of the response 
+    #[arg(short = 'I', long)]
     pub head: bool,
 
     /// By default: sURL automatically determines the response body format
-    /// and highlights it if its supported, can be memory heavy due to
-    /// because we need to get the whole response to style it.
-    /// When this flag is provided the above is turned off and a memory-less method is used
-    #[arg(short = 'M')]
+    /// and highlights it if its supported, can be memory heavy because 
+    /// we need to get the whole response to style it.
+    /// When this flag is provided highlightning turned off and a memory-efficient method is used
+    #[arg(short = 'M', long)]
     pub no_highlight: bool,
 
     /// Provide a POST data for a request it can be either a file path or plain text or `-` to
     /// use input from stdin
-    #[arg(short = 'd')]
+    #[arg(short = 'd', long)]
     pub data: Option<String>,
 }
 
