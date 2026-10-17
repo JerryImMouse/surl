@@ -1,7 +1,7 @@
-use std::io::Write;
-use reqwest::Response;
-use anyhow::Result;
 use crate::cli::CliArgs;
+use anyhow::Result;
+use reqwest::Response;
+use std::io::Write;
 
 mod body;
 mod headers;
@@ -37,7 +37,7 @@ pub async fn write_response(
             headers::write(out, colorize, &response)?;
             writeln!(out)?;
             body::write(out, colorize, response).await?;
-        },
+        }
     }
     out.flush()?;
     Ok(())

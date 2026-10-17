@@ -12,7 +12,8 @@ pub async fn write(out: &mut dyn Write, colorize: bool, response: Response) -> R
 
     let syntax = super::highlight::syntax_for(content_type);
 
-    if let Some(syntax) = syntax && colorize
+    if let Some(syntax) = syntax
+        && colorize
     {
         // because of how syntect handles highlighting I need to download whole body
         // here

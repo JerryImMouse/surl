@@ -1,6 +1,11 @@
-use std::{io::Write, sync::LazyLock};
 use anyhow::Result;
-use syntect::{easy::HighlightLines, highlighting::{Style, ThemeSet}, parsing::{SyntaxReference, SyntaxSet}, util::{LinesWithEndings, as_24_bit_terminal_escaped}};
+use std::{io::Write, sync::LazyLock};
+use syntect::{
+    easy::HighlightLines,
+    highlighting::{Style, ThemeSet},
+    parsing::{SyntaxReference, SyntaxSet},
+    util::{LinesWithEndings, as_24_bit_terminal_escaped},
+};
 
 static PS: LazyLock<SyntaxSet> = LazyLock::new(SyntaxSet::load_defaults_newlines);
 static TS: LazyLock<ThemeSet> = LazyLock::new(ThemeSet::load_defaults);
@@ -15,17 +20,13 @@ pub fn syntax_for(content_type: &str) -> Option<&'static SyntaxReference> {
     } else if content_type.contains("xml") {
         "xml"
     } else {
-        return None; 
+        return None;
     };
 
     PS.find_syntax_by_extension(ext)
 }
 
-pub fn highlight(
-    out: &mut dyn Write,
-    body: &str,
-    syntax: &SyntaxReference,
-) -> Result<()> {
+pub fn highlight(out: &mut dyn Write, body: &str, syntax: &SyntaxReference) -> Result<()> {
     let mut h = HighlightLines::new(syntax, &TS.themes[THEME]);
     for line in LinesWithEndings::from(body) {
         let ranges: Vec<(Style, &str)> = h.highlight_line(line, &PS)?;

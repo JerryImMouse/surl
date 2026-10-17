@@ -10,7 +10,5 @@ pub fn build_client(args: &CliArgs) -> Result<Client> {
         builder = builder.redirect(Policy::none());
     }
 
-    builder
-        .build()
-        .context("failed to build a client")
+    builder.build().context("failed to build a client")
 }
